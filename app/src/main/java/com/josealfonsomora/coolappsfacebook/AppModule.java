@@ -15,6 +15,13 @@ public class AppModule {
     public AppModule(App context) {
         this.context = context;
     }
-    
+
+    @Provides
+    @Singleton
+    public UserSession provideAppSettings() {
+        return new UserSession(context);
+    }
+
+
 }
 

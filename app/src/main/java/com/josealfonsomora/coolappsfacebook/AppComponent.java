@@ -12,6 +12,8 @@ public interface AppComponent {
 
     void inject(App app);
 
+    void inject(MainActivity mainActivity);
+
     public final static class Initializer {
         public static AppComponent init(App appContext) {
             return DaggerAppComponent.builder()
