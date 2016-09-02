@@ -1,6 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 
+def appLibs = rootProject.ext.appLibraries;
+def testLibs = rootProject.ext.testingLibraries;
+
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.0"
@@ -23,11 +26,19 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:24.0.0'
-    compile 'com.android.support:design:24.0.0'
-    compile 'com.facebook.android:facebook-android-sdk:4.15.0'
+    compile "com.android.support:appcompat-v7:${appLibraries.ANDROID_SUPPORT_VERSION}"
+    compile "com.android.support:design:${appLibraries.ANDROID_SUPPORT_VERSION}"
+    compile "com.facebook.android:facebook-android-sdk:${appLibraries.FACEBOOK_SDK_VERSION}"
+    compile "com.google.dagger:dagger:${appLibraries.DAGGER_VERSION}"
+    compile "com.jakewharton:butterknife:${appLibraries.BUTTERKNIFE_VERSION}"
 
-    compile "com.google.dagger:dagger:2.6.1"
+    apt "com.jakewharton:butterknife-compiler:${appLibraries.BUTTERKNIFE_VERSION}"
+    apt "com.google.dagger:dagger-compiler:${appLibraries.DAGGER_VERSION}"
 
-    apt "com.google.dagger:dagger-compiler:2.6.1"
+    // Dependencies for local unit tests
+    testCompile "junit:junit:${testLibs.JUNIT_VERSION}"
+    testCompile "org.mockito:mockito-all:${testLibs.MOCKITO_VERSION}"
+    testCompile "org.hamcrest:hamcrest-all:${testLibs.HAMCREST_VERSION}"
+    testCompile "org.powermock:powermock-module-junit4:${testLibs.POWER_MOCKITO_VERSION}"
+    testCompile "org.powermock:powermock-api-mockito:${testLibs.POWER_MOCKITO_VERSION}"
 }
