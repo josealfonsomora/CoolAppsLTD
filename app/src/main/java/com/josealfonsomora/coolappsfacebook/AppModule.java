@@ -2,6 +2,8 @@ package com.josealfonsomora.coolappsfacebook;
 
 import android.content.Context;
 
+import com.josealfonsomora.coolappsfacebook.login.LoginPresenter;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -22,6 +24,10 @@ public class AppModule {
         return new UserSession(context);
     }
 
+    @Provides
+    public LoginPresenter provideLoginPresenter(UserSession userSession){
+        return new LoginPresenter(userSession);
+    }
 
 }
 

@@ -12,6 +12,7 @@ public class UserSession {
 
     private final String EMAIL = "EMAIL";
     private final String USER_NAME = "USER_NAME";
+    private final String FACEBOOK_USER_ID = "FACEBOOK_USER_ID";
 
     public UserSession(Context context) {
         session = context.getSharedPreferences("user_session", Context.MODE_PRIVATE);
@@ -31,6 +32,13 @@ public class UserSession {
     }
 
 
+    public void setFacebookUserId(String facebookUserId) {
+        editor.putString(FACEBOOK_USER_ID, facebookUserId).commit();
+    }
+
+    public String getFacebookUserId() {
+        return session.getString(FACEBOOK_USER_ID, "");
+    }
 }
 
 
