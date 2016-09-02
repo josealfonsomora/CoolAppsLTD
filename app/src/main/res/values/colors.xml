@@ -3,4 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!-- Facebook palette -->
+    <color name="facebook_blue">#3b5998</color>
+    <color name="facebook_light_blue">#8b9dc3</color>
+    <color name="facebook_grey">#dfe3ee</color>
+    <color name="facebook_light_grey">#f7f7f7</color>
+    <color name="facebook_white">#ffffff</color>
 </resources>
