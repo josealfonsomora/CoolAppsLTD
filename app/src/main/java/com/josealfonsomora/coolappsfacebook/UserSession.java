@@ -13,6 +13,7 @@ public class UserSession {
     private final String EMAIL = "EMAIL";
     private final String USER_NAME = "USER_NAME";
     private final String FACEBOOK_USER_ID = "FACEBOOK_USER_ID";
+    private final String FACEBOOK_ACCESS_TOKEN = "FACEBOOK_ACCESS_TOKEN";
 
     public UserSession(Context context) {
         session = context.getSharedPreferences("user_session", Context.MODE_PRIVATE);
@@ -31,13 +32,20 @@ public class UserSession {
         editor.putString(EMAIL, email).commit();
     }
 
+    public String getFacebookUserId() {
+        return session.getString(FACEBOOK_USER_ID, "");
+    }
 
     public void setFacebookUserId(String facebookUserId) {
         editor.putString(FACEBOOK_USER_ID, facebookUserId).commit();
     }
 
-    public String getFacebookUserId() {
-        return session.getString(FACEBOOK_USER_ID, "");
+    public String getFacebookAccessToken() {
+        return session.getString(FACEBOOK_ACCESS_TOKEN, "");
+    }
+
+    public void setFacebookAccessToken(String facebookAccessToken) {
+        editor.putString(FACEBOOK_ACCESS_TOKEN, facebookAccessToken).commit();
     }
 }
 

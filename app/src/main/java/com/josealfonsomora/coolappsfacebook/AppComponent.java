@@ -1,6 +1,7 @@
 package com.josealfonsomora.coolappsfacebook;
 
 import com.josealfonsomora.coolappsfacebook.login.LoginActivity;
+import com.josealfonsomora.coolappsfacebook.main.MainActivity;
 
 import javax.inject.Singleton;
 
@@ -8,7 +9,8 @@ import dagger.Component;
 
 @Singleton
 @Component(modules = {
-        AppModule.class
+        AppModule.class,
+        ClientModule.class
 })
 public interface AppComponent {
 

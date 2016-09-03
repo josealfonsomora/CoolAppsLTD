@@ -1,6 +1,5 @@
 package com.josealfonsomora.coolappsfacebook.login;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,7 +14,7 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.josealfonsomora.coolappsfacebook.App;
 import com.josealfonsomora.coolappsfacebook.AppSettings;
-import com.josealfonsomora.coolappsfacebook.MainActivity;
+import com.josealfonsomora.coolappsfacebook.main.MainActivity;
 import com.josealfonsomora.coolappsfacebook.R;
 import com.josealfonsomora.coolappsfacebook.mvp.BaseActivity;
 

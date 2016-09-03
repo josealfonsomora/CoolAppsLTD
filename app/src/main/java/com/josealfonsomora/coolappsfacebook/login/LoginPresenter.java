@@ -44,6 +44,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
     public void onFacebookCallbackSuccess(LoginResult loginResult) {
         if (loginResult.getAccessToken() != null) {
             userSession.setFacebookUserId(loginResult.getAccessToken().getUserId());
+            userSession.setFacebookAccessToken(loginResult.getAccessToken().getToken());
             if (isViewAttached()){
                 getView().moveToMain();
             }

@@ -1,35 +1,61 @@
-package com.josealfonsomora.coolappsfacebook;
+package com.josealfonsomora.coolappsfacebook.main;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.josealfonsomora.coolappsfacebook.App;
+import com.josealfonsomora.coolappsfacebook.R;
+import com.josealfonsomora.coolappsfacebook.UserSession;
+import com.josealfonsomora.coolappsfacebook.mvp.BaseActivity;
 
 import javax.inject.Inject;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class MainActivity extends BaseActivity implements MainView, NavigationView.OnNavigationItemSelectedListener {
 
     @Inject
     UserSession userSession;
+
+    @Inject
+    MainPresenter presenter;
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
+
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawer;
+
+    @BindView(R.id.nav_view)
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         App.getApp().component().inject(this);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        ButterKnife.bind(this);
+
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -38,14 +64,19 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.attachView(this);
+
     }
 
     @Override
@@ -103,5 +134,38 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void setUserPicture(String response) {
+
+    }
+
+    @Override
+    public void setUserName(String name) {
+        TextView userName = ButterKnife.findById(navigationView.getHeaderView(0), R.id.user_name);
+        userName.setText(name);
+    }
+
+    @Override
+    public void setUserGender(String gender) {
+
+    }
+
+    @Override
+    public void setUserLink(String link) {
+        TextView profileLink = ButterKnife.findById(navigationView.getHeaderView(0), R.id.profile_link);
+        profileLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                startActivity(browserIntent);
+            }
+        });
+    }
+
+    @Override
+    public void showErrorToast(String message) {
+        Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 }
