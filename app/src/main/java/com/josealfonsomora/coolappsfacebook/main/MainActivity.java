@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +21,7 @@ import com.josealfonsomora.coolappsfacebook.App;
 import com.josealfonsomora.coolappsfacebook.R;
 import com.josealfonsomora.coolappsfacebook.UserSession;
 import com.josealfonsomora.coolappsfacebook.mvp.BaseActivity;
+import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
 
@@ -138,7 +140,12 @@ public class MainActivity extends BaseActivity implements MainView, NavigationVi
 
     @Override
     public void setUserPicture(String response) {
-
+        ImageView userPicture = ButterKnife.findById(navigationView.getHeaderView(0), R.id.imageView);
+        Picasso.with(this)
+                .load(response)
+                .placeholder(android.R.drawable.sym_def_app_icon)
+                .error(android.R.drawable.sym_def_app_icon)
+                .into(userPicture);
     }
 
     @Override

@@ -8,10 +8,6 @@ public class FacebookPublicProfile {
     Range age_range;
     String link;
     String gender;
-    String locale;
-    FacebookPicture picture;
-    String timezone;
-    String updated_time;
     boolean verified;
 
     public String getId() {
@@ -68,38 +64,6 @@ public class FacebookPublicProfile {
 
     public void setGender(String gender) {
         this.gender = gender;
-    }
-
-    public String getLocale() {
-        return locale;
-    }
-
-    public void setLocale(String locale) {
-        this.locale = locale;
-    }
-
-    public FacebookPicture getPicture() {
-        return picture;
-    }
-
-    public void setPicture(FacebookPicture picture) {
-        this.picture = picture;
-    }
-
-    public String getTimezone() {
-        return timezone;
-    }
-
-    public void setTimezone(String timezone) {
-        this.timezone = timezone;
-    }
-
-    public String getUpdated_time() {
-        return updated_time;
-    }
-
-    public void setUpdated_time(String updated_time) {
-        this.updated_time = updated_time;
     }
 
     public boolean isVerified() {
