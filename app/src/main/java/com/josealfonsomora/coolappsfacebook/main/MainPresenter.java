@@ -6,12 +6,12 @@ import android.text.TextUtils;
 import com.josealfonsomora.coolappsfacebook.UserSession;
 import com.josealfonsomora.coolappsfacebook.facebookAPI.FacebookClient;
 import com.josealfonsomora.coolappsfacebook.facebookAPI.FacebookPictureType;
-import com.josealfonsomora.coolappsfacebook.mvp.BaseRxPresenter;
+import com.josealfonsomora.coolappsfacebook.mvp.BasePresenter;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class MainPresenter extends BaseRxPresenter<MainView> {
+public class MainPresenter extends BasePresenter<MainView> {
     private final FacebookClient facebookClient;
     private final UserSession userSession;
 
@@ -23,7 +23,7 @@ public class MainPresenter extends BaseRxPresenter<MainView> {
     @Override
     public void attachView(@NonNull MainView view) {
         super.attachView(view);
-        resetRxOperation();
+//        resetRxOperation();
         getUserPublicProfile();
         getUserPictureProfile();
 
@@ -38,7 +38,6 @@ public class MainPresenter extends BaseRxPresenter<MainView> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
-                .compose(cancelOperationTransformer())
                 .subscribe(response -> {
                             if (isViewAttached()) {
                                 if (response != null) {
@@ -62,7 +61,6 @@ public class MainPresenter extends BaseRxPresenter<MainView> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
-                .compose(cancelOperationTransformer())
                 .subscribe(response -> {
                             if (isViewAttached()) {
                                 if (response != null) {
