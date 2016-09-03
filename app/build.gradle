@@ -45,6 +45,7 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
     compile "io.reactivex:rxandroid:${appLibs.RxANDROID_VERSION}"
     compile "io.reactivex:rxjava:${appLibs.RxJAVA_VERSION}"
+    compile "com.squareup.picasso:picasso:${appLibs.PICASSO_VERSION}"
 
     // Dependencies for local unit tests
     testCompile "junit:junit:${testLibs.JUNIT_VERSION}"
