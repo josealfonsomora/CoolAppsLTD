@@ -12,4 +12,6 @@ public interface MainView extends MvpView {
     void setUserLink(String link);
 
     void showErrorToast(String message);
+
+    void moveToLogin();
 }

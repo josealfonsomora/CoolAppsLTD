@@ -2,7 +2,9 @@ package com.josealfonsomora.coolappsfacebook.main;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.view.MenuItem;
 
+import com.josealfonsomora.coolappsfacebook.R;
 import com.josealfonsomora.coolappsfacebook.UserSession;
 import com.josealfonsomora.coolappsfacebook.facebookAPI.FacebookClient;
 import com.josealfonsomora.coolappsfacebook.facebookAPI.FacebookPictureType;
@@ -18,15 +20,6 @@ public class MainPresenter extends BasePresenter<MainView> {
     public MainPresenter(FacebookClient facebookClient, UserSession userSession) {
         this.facebookClient = facebookClient;
         this.userSession = userSession;
-    }
-
-    @Override
-    public void attachView(@NonNull MainView view) {
-        super.attachView(view);
-//        resetRxOperation();
-        getUserPublicProfile();
-        getUserPictureProfile();
-
     }
 
     private void getUserPictureProfile() {
@@ -82,5 +75,32 @@ public class MainPresenter extends BasePresenter<MainView> {
                                 getView().showErrorToast(error.getMessage());
                             }
                         });
+    }
+
+    public void onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_camera) {
+            // Handle the camera action
+        } else if (id == R.id.nav_gallery) {
+
+        } else if (id == R.id.nav_slideshow) {
+
+        } else if (id == R.id.nav_manage) {
+
+        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.nav_logout) {
+            if(isViewAttached()){
+                userSession.clear();
+                getView().moveToLogin();
+            }
+        }
+    }
+
+    public void init() {
+        getUserPublicProfile();
+        getUserPictureProfile();
     }
 }

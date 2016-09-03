@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.josealfonsomora.coolappsfacebook.App;
 import com.josealfonsomora.coolappsfacebook.R;
 import com.josealfonsomora.coolappsfacebook.UserSession;
+import com.josealfonsomora.coolappsfacebook.login.LoginActivity;
 import com.josealfonsomora.coolappsfacebook.mvp.BaseActivity;
 import com.squareup.picasso.Picasso;
 
@@ -78,6 +79,7 @@ public class MainActivity extends BaseActivity implements MainView, NavigationVi
     protected void onResume() {
         super.onResume();
         presenter.attachView(this);
+        presenter.init();
 
     }
 
@@ -116,22 +118,7 @@ public class MainActivity extends BaseActivity implements MainView, NavigationVi
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
+        presenter.onNavigationItemSelected(item);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -174,5 +161,11 @@ public class MainActivity extends BaseActivity implements MainView, NavigationVi
     @Override
     public void showErrorToast(String message) {
         Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void moveToLogin() {
+        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        finish();
     }
 }
