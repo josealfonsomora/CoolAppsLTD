@@ -5,7 +5,10 @@ ext {
             ANDROID_SUPPORT_VERSION: '24.0.0',
             DAGGER_VERSION         : '2.6.1',
             BUTTERKNIFE_VERSION    : '8.4.0',
-            FACEBOOK_SDK_VERSION   : '4.15.0'
+            FACEBOOK_SDK_VERSION   : '4.15.0',
+            RxANDROID_VERSION      : '1.2.1',
+            RxJAVA_VERSION         : '1.1.7',
+            RETROFIT_VERSION       : '2.1.0'
     ]
 
     testingLibraries = [
@@ -22,6 +25,8 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:2.1.2'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'me.tatarka:gradle-retrolambda:3.1.0'
+
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

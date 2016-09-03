@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'me.tatarka.retrolambda'
 
 def appLibs = rootProject.ext.appLibraries;
 def testLibs = rootProject.ext.testingLibraries;
@@ -21,6 +22,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
 }
 
 dependencies {
@@ -31,9 +36,15 @@ dependencies {
     compile "com.facebook.android:facebook-android-sdk:${appLibraries.FACEBOOK_SDK_VERSION}"
     compile "com.google.dagger:dagger:${appLibraries.DAGGER_VERSION}"
     compile "com.jakewharton:butterknife:${appLibraries.BUTTERKNIFE_VERSION}"
-
+    compile "com.android.support:support-annotations:${appLibs.ANDROID_SUPPORT_VERSION}"
+    compile "com.squareup.retrofit2:retrofit:${appLibs.RETROFIT_VERSION}"
+    compile "com.squareup.retrofit2:converter-gson:${appLibs.RETROFIT_VERSION}"
     apt "com.jakewharton:butterknife-compiler:${appLibraries.BUTTERKNIFE_VERSION}"
     apt "com.google.dagger:dagger-compiler:${appLibraries.DAGGER_VERSION}"
+    compile "com.squareup.retrofit2:adapter-rxjava:${appLibs.RETROFIT_VERSION}"
+    compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
+    compile "io.reactivex:rxandroid:${appLibs.RxANDROID_VERSION}"
+    compile "io.reactivex:rxjava:${appLibs.RxJAVA_VERSION}"
 
     // Dependencies for local unit tests
     testCompile "junit:junit:${testLibs.JUNIT_VERSION}"
