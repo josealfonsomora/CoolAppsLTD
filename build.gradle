@@ -8,6 +8,7 @@ ext {
             FACEBOOK_SDK_VERSION   : '4.15.0',
             RxANDROID_VERSION      : '1.2.1',
             RxJAVA_VERSION         : '1.1.7',
+            PARCELER_VERSION       : '1.1.5',
             PICASSO_VERSION        : '2.5.2',
             RETROFIT_VERSION       : '2.1.0'
     ]
