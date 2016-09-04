@@ -12,4 +12,19 @@
     <color name="facebook_white">#ffffff</color>
 
     <color name="transparent_black">#96000000</color>
+
+    <color name="rosy_brown">#BC8DA0</color>
+    <color name="magenta_haze">#A04668</color>
+    <color name="xanadu">#748B75</color>
+    <color name="pastel_brownn">#856A5D</color>
+    <color name="olive_drab">#36311F</color>
+
+    <array name="piechart_palette">
+        <item>@color/colorPrimary</item>
+        <item>@color/facebook_light_blue</item>
+        <item>@color/rosy_brown</item>
+        <item>@color/magenta_haze</item>
+        <item>@color/xanadu</item>
+        <item>@color/olive_drab</item>
+    </array>
 </resources>

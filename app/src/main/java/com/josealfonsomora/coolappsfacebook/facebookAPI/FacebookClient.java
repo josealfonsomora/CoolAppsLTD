@@ -17,7 +17,7 @@ public interface FacebookClient {
             @Query("access_token") String accessToken);
 
     @GET("{film-id}?fields=awards,genre,name,fan_count,directed_by,plot_outline,produced_by,release_date,screenplay_by,starring,studio,cover")
-    Observable<FacebooFilmProfile> getFilmProfile(
+    Observable<FacebookFilmProfile> getFilmProfile(
                     @Path("film-id") String filmID,
                     @Query("access_token") String accessToken);
 

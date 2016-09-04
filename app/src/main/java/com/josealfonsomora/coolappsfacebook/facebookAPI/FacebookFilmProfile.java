@@ -1,6 +1,6 @@
 package com.josealfonsomora.coolappsfacebook.facebookAPI;
 
-public class FacebooFilmProfile {
+public class FacebookFilmProfile {
     private String genre;
 
     private String plot_outline;

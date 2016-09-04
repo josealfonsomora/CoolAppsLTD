@@ -1,12 +1,11 @@
 package com.josealfonsomora.coolappsfacebook.main;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.GravityCompat;
@@ -22,14 +21,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.josealfonsomora.coolappsfacebook.App;
 import com.josealfonsomora.coolappsfacebook.R;
 import com.josealfonsomora.coolappsfacebook.UserSession;
-import com.josealfonsomora.coolappsfacebook.facebookAPI.FacebooFilmProfile;
+import com.josealfonsomora.coolappsfacebook.facebookAPI.FacebookFilmProfile;
 import com.josealfonsomora.coolappsfacebook.login.LoginActivity;
 import com.josealfonsomora.coolappsfacebook.mvp.BaseActivity;
 import com.josealfonsomora.coolappsfacebook.profile.ProfileActivity;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -53,8 +61,8 @@ public class MainActivity extends BaseActivity implements MainView, NavigationVi
     @BindView(R.id.nav_view)
     NavigationView navigationView;
 
-    @BindView(R.id.films_text)
-    TextView textViewFilms;
+    @BindView(R.id.chart)
+    PieChart mChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -191,7 +199,67 @@ public class MainActivity extends BaseActivity implements MainView, NavigationVi
     }
 
     @Override
-    public void addNewFilm(FacebooFilmProfile dataResponse) {
-        textViewFilms.setText(textViewFilms.getText() + "\n" + dataResponse.getName());
+    public void initChart(List<FacebookFilmProfile> films) {
+        mChart.setVisibility(View.GONE);
+        mChart.setUsePercentValues(true);
+        mChart.setExtraOffsets(5, 10, 5, 5);
+        mChart.setDescription("");
+        mChart.setDragDecelerationFrictionCoef(0.95f);
+
+        mChart.setDrawHoleEnabled(true);
+        mChart.setHoleColor(Color.WHITE);
+        mChart.setTransparentCircleColor(Color.WHITE);
+        mChart.setTransparentCircleAlpha(110);
+
+        mChart.setHoleRadius(38f);
+        mChart.setTransparentCircleRadius(41f);
+        mChart.setDrawCenterText(false);
+
+        // entry label styling
+        mChart.setEntryLabelColor(Color.WHITE);
+        mChart.setEntryLabelTextSize(12f);
+
+    }
+
+
+    @Override
+    public void setChartData(ArrayList<PieEntry> entries, String title) {
+        if(getSupportActionBar()!=null) {
+            getSupportActionBar().setTitle(title);
+        }
+        PieDataSet dataSet = new PieDataSet(entries, title);
+        dataSet.setSliceSpace(3f);
+        dataSet.setSelectionShift(5f);
+
+        ArrayList<Integer> colors = new ArrayList<Integer>();
+
+        int[] rainbow = getResources().getIntArray(R.array.piechart_palette);
+
+        for (int c : rainbow) {
+            colors.add(c);
+        }
+
+        dataSet.setColors(colors);
+        //dataSet.setSelectionShift(0f);
+
+        PieData data = new PieData(dataSet);
+        data.setValueFormatter(new PercentFormatter());
+        data.setValueTextSize(11f);
+        data.setValueTextColor(Color.WHITE);
+
+        mChart.setData(data);
+
+        // undo all highlights
+        mChart.highlightValues(null);
+
+        mChart.invalidate();
+
+        mChart.setVisibility(View.VISIBLE);
+        mChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
+    }
+
+    @Override
+    public void showNoDataFromFacebookErrorToast(String object) {
+        Toast.makeText(MainActivity.this, getResources().getString(R.string.no_data_from_facebook,object), Toast.LENGTH_SHORT).show();
     }
 }

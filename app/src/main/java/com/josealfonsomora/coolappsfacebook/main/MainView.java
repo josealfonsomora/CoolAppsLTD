@@ -1,7 +1,11 @@
 package com.josealfonsomora.coolappsfacebook.main;
 
-import com.josealfonsomora.coolappsfacebook.facebookAPI.FacebooFilmProfile;
+import com.github.mikephil.charting.data.PieEntry;
+import com.josealfonsomora.coolappsfacebook.facebookAPI.FacebookFilmProfile;
 import com.josealfonsomora.coolappsfacebook.mvp.MvpView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public interface MainView extends MvpView {
     void setUserPicture(String response);
@@ -20,5 +24,9 @@ public interface MainView extends MvpView {
 
     void closeNavDrawer();
 
-    void addNewFilm(FacebooFilmProfile dataResponse);
+    void initChart(List<FacebookFilmProfile> films);
+
+    void setChartData(ArrayList<PieEntry> entries, String title);
+
+    void showNoDataFromFacebookErrorToast(String object);
 }
