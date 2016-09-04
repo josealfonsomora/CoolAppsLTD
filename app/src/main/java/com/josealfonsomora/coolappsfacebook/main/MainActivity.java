@@ -4,13 +4,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.util.Pair;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -33,14 +31,10 @@ import com.josealfonsomora.coolappsfacebook.mvp.BaseActivity;
 import com.josealfonsomora.coolappsfacebook.profile.ProfileActivity;
 import com.squareup.picasso.Picasso;
 
-import org.parceler.Parcels;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static android.support.v4.app.ActivityOptionsCompat.*;
 
 public class MainActivity extends BaseActivity implements MainView, NavigationView.OnNavigationItemSelectedListener {
 
@@ -52,9 +46,6 @@ public class MainActivity extends BaseActivity implements MainView, NavigationVi
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
 
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
@@ -77,14 +68,6 @@ public class MainActivity extends BaseActivity implements MainView, NavigationVi
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -189,15 +172,14 @@ public class MainActivity extends BaseActivity implements MainView, NavigationVi
     @Override
     public void openUserProfile() {
         ImageView imageView = ButterKnife.findById(navigationView.getHeaderView(0), R.id.imageView);
-        Intent intent = new Intent(MainActivity.this,ProfileActivity.class);
-        if(!TextUtils.isEmpty(userSession.getPictureUrl())){
+        Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+        if (!TextUtils.isEmpty(userSession.getPictureUrl())) {
             intent.putExtra(ProfileActivity.USER_IMAGE_EXTRA, userSession.getPictureUrl());
         }
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, (ImageView)imageView, "profile");
-            ActivityCompat.startActivity(this,intent, options.toBundle());
-        }
-        else {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, (ImageView) imageView, "profile");
+            ActivityCompat.startActivity(this, intent, options.toBundle());
+        } else {
             startActivity(intent);
         }
     }
