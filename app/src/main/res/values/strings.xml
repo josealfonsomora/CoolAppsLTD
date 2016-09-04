@@ -14,4 +14,5 @@
     <string name="activity_image_trans">user_image_trans</string>
     <string name="no_data_from_facebook">Do you like any %1$s!?</string>
     <string name="films">Films</string>
+    <string name="books">Books</string>
 </resources>

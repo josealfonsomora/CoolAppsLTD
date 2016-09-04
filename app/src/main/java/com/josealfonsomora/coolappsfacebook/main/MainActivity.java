@@ -199,7 +199,7 @@ public class MainActivity extends BaseActivity implements MainView, NavigationVi
     }
 
     @Override
-    public void initChart(List<FacebookFilmProfile> films) {
+    public void initChart() {
         mChart.setVisibility(View.GONE);
         mChart.setUsePercentValues(true);
         mChart.setExtraOffsets(5, 10, 5, 5);
@@ -219,6 +219,7 @@ public class MainActivity extends BaseActivity implements MainView, NavigationVi
         mChart.setEntryLabelColor(Color.WHITE);
         mChart.setEntryLabelTextSize(12f);
 
+        mChart.clear();
     }
 
 

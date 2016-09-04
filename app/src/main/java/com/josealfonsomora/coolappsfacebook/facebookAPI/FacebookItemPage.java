@@ -1,8 +1,10 @@
 package com.josealfonsomora.coolappsfacebook.facebookAPI;
 
 import java.util.List;
-
-public class FacebookUserFilms {
+/*
+ * This object is common for books, movies and music.
+ */
+public class FacebookItemPage {
     public String name;
     public String id;
     public List<Data> data;

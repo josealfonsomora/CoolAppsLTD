@@ -24,7 +24,7 @@ public interface MainView extends MvpView {
 
     void closeNavDrawer();
 
-    void initChart(List<FacebookFilmProfile> films);
+    void initChart();
 
     void setChartData(ArrayList<PieEntry> entries, String title);
 

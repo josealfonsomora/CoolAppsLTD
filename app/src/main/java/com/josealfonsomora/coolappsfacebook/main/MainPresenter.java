@@ -8,10 +8,11 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.josealfonsomora.coolappsfacebook.R;
 import com.josealfonsomora.coolappsfacebook.UserSession;
 import com.josealfonsomora.coolappsfacebook.facebookAPI.Data;
+import com.josealfonsomora.coolappsfacebook.facebookAPI.FacebookBookProfile;
 import com.josealfonsomora.coolappsfacebook.facebookAPI.FacebookClient;
 import com.josealfonsomora.coolappsfacebook.facebookAPI.FacebookFilmProfile;
 import com.josealfonsomora.coolappsfacebook.facebookAPI.FacebookPictureType;
-import com.josealfonsomora.coolappsfacebook.facebookAPI.FacebookUserFilms;
+import com.josealfonsomora.coolappsfacebook.facebookAPI.FacebookItemPage;
 import com.josealfonsomora.coolappsfacebook.mvp.BasePresenter;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class MainPresenter extends BasePresenter<MainView> {
     private final FacebookClient facebookClient;
     private final UserSession userSession;
     private List<FacebookFilmProfile> films = new ArrayList<>();
+    private List<FacebookBookProfile> books = new ArrayList<>();
 
     public MainPresenter(FacebookClient facebookClient, UserSession userSession) {
         this.facebookClient = facebookClient;
@@ -111,8 +113,8 @@ public class MainPresenter extends BasePresenter<MainView> {
         } else if (id == R.id.nav_films) {
             getFilms();
 
-        } else if (id == R.id.nav_slideshow) {
-
+        } else if (id == R.id.nav_books) {
+            getBooks();
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
@@ -152,7 +154,83 @@ public class MainPresenter extends BasePresenter<MainView> {
                         });
     }
 
-    private void getFilmProfile(FacebookUserFilms response, Data data) {
+    private void getBooks() {
+        facebookClient.getUserBooks(userSession.getFacebookUserId(), userSession.getFacebookAccessToken())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(response -> {
+                            if (response.getData() != null) {
+                                if (!response.getData().isEmpty()) {
+                                    books = new ArrayList<FacebookBookProfile>();
+                                    for (Data data : response.getData()) {
+                                        getBookProfile(response, data);
+                                    }
+                                } else {
+                                    if (isViewAttached()) {
+                                        getView().showNoDataFromFacebookErrorToast("books");
+                                    }
+                                }
+                            }
+                        },
+                        error -> {
+                            if (isViewAttached()) {
+                                getView().showErrorToast(error.getMessage());
+                            }
+                        });
+    }
+
+    private void getBookProfile(FacebookItemPage response, Data data) {
+        facebookClient.getBookProfile(data.getId(), userSession.getFacebookAccessToken())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(dataResponse -> {
+                            if (dataResponse != null) {
+                                books.add(dataResponse); // TODO: need to be synchronized
+                                if (books.size() == response.getData().size()) {
+                                    getView().initChart();
+                                    processBooks(books)
+                                            .subscribeOn(Schedulers.io())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe(this::onBooksProcessed,
+                                                    e -> {
+                                                        if (isViewAttached()) {
+                                                            getView().showErrorToast(e.getMessage());
+                                                        }
+                                                    });
+                                }
+                            }
+                        },
+                        error -> {
+                            if (isViewAttached()) {
+                                getView().showErrorToast(error.getMessage());
+                            }
+                        });
+    }
+
+    private Observable<ArrayList<PieEntry>> processBooks(List<FacebookBookProfile> books) {
+        HashMap<String, Float> genreMap = new HashMap<>();
+
+        for (FacebookBookProfile book : books) {
+            if (!TextUtils.isEmpty(book.getWritten_by())) {
+                String[] writers = book.getWritten_by().split(",");
+
+                for (String writer : writers) {
+
+                    if (!genreMap.containsKey(writer.trim().toUpperCase())) {
+                        genreMap.put(writer.trim().toUpperCase(), 1f);
+                    } else {
+                        genreMap.put(writer.trim().toUpperCase(), genreMap.get(writer.trim().toUpperCase()) + 1f);
+                    }
+                }
+            }
+        }
+
+        return Observable.just(getEntriesListFromHashMap(genreMap));
+    }
+
+    private void getFilmProfile(FacebookItemPage response, Data data) {
         facebookClient.getFilmProfile(data.getId(), userSession.getFacebookAccessToken())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -161,7 +239,7 @@ public class MainPresenter extends BasePresenter<MainView> {
                             if (dataResponse != null) {
                                 films.add(dataResponse); // TODO: need to be synchronized
                                 if (films.size() == response.getData().size()) {
-                                    getView().initChart(films);
+                                    getView().initChart();
                                     processFilms(films)
                                             .subscribeOn(Schedulers.io())
                                             .observeOn(AndroidSchedulers.mainThread())
@@ -184,6 +262,12 @@ public class MainPresenter extends BasePresenter<MainView> {
     private void onFilmsProcessed(ArrayList<PieEntry> pieEntries) {
         if (isViewAttached()) {
             getView().setChartData(pieEntries, "Films");
+        }
+    }
+
+    private void onBooksProcessed(ArrayList<PieEntry> pieEntries) {
+        if (isViewAttached()) {
+            getView().setChartData(pieEntries, "Books");
         }
     }
 

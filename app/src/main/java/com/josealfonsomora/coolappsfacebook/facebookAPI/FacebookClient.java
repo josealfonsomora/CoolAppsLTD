@@ -12,13 +12,23 @@ public interface FacebookClient {
             @Query("access_token") String accessToken);
 
     @GET("{user-id}/movies")
-    Observable<FacebookUserFilms> getUserFilms(
+    Observable<FacebookItemPage> getUserFilms(
+            @Path("user-id") String user,
+            @Query("access_token") String accessToken);
+
+    @GET("{user-id}/books")
+    Observable<FacebookItemPage> getUserBooks(
             @Path("user-id") String user,
             @Query("access_token") String accessToken);
 
     @GET("{film-id}?fields=awards,genre,name,fan_count,directed_by,plot_outline,produced_by,release_date,screenplay_by,starring,studio,cover")
     Observable<FacebookFilmProfile> getFilmProfile(
                     @Path("film-id") String filmID,
+                    @Query("access_token") String accessToken);
+
+    @GET("{book-id}?fields=about,name,picture,written_by")
+    Observable<FacebookBookProfile> getBookProfile(
+                    @Path("book-id") String filmID,
                     @Query("access_token") String accessToken);
 
     @GET("{user-id}/picture?redirect=0")
