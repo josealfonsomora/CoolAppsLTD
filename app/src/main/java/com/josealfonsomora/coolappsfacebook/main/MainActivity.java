@@ -2,17 +2,24 @@ package com.josealfonsomora.coolappsfacebook.main;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,12 +29,17 @@ import com.josealfonsomora.coolappsfacebook.R;
 import com.josealfonsomora.coolappsfacebook.UserSession;
 import com.josealfonsomora.coolappsfacebook.login.LoginActivity;
 import com.josealfonsomora.coolappsfacebook.mvp.BaseActivity;
+import com.josealfonsomora.coolappsfacebook.profile.ProfileActivity;
 import com.squareup.picasso.Picasso;
+
+import org.parceler.Parcels;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.support.v4.app.ActivityOptionsCompat.*;
 
 public class MainActivity extends BaseActivity implements MainView, NavigationView.OnNavigationItemSelectedListener {
 
@@ -53,6 +65,9 @@ public class MainActivity extends BaseActivity implements MainView, NavigationVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         App.getApp().component().inject(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        }
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
@@ -120,8 +135,6 @@ public class MainActivity extends BaseActivity implements MainView, NavigationVi
     public boolean onNavigationItemSelected(MenuItem item) {
         presenter.onNavigationItemSelected(item);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
@@ -130,8 +143,8 @@ public class MainActivity extends BaseActivity implements MainView, NavigationVi
         ImageView userPicture = ButterKnife.findById(navigationView.getHeaderView(0), R.id.imageView);
         Picasso.with(this)
                 .load(response)
-                .placeholder(android.R.drawable.sym_def_app_icon)
-                .error(android.R.drawable.sym_def_app_icon)
+                .placeholder(R.drawable.com_facebook_profile_picture_blank_portrait)
+                .error(R.drawable.com_facebook_profile_picture_blank_portrait)
                 .into(userPicture);
     }
 
@@ -167,5 +180,27 @@ public class MainActivity extends BaseActivity implements MainView, NavigationVi
     public void moveToLogin() {
         startActivity(new Intent(MainActivity.this, LoginActivity.class));
         finish();
+    }
+
+    @Override
+    public void openUserProfile() {
+        ImageView imageView = ButterKnife.findById(navigationView.getHeaderView(0), R.id.imageView);
+        Intent intent = new Intent(MainActivity.this,ProfileActivity.class);
+        if(!TextUtils.isEmpty(userSession.getPictureUrl())){
+            intent.putExtra(ProfileActivity.USER_IMAGE_EXTRA, userSession.getPictureUrl());
+        }
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, (ImageView)imageView, "profile");
+            ActivityCompat.startActivity(this,intent, options.toBundle());
+        }
+        else {
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void closeNavDrawer() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
     }
 }

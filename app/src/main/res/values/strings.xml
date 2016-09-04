@@ -10,5 +10,7 @@
     <string name="view_profile">View profile</string>
     <string name="share">Share</string>
     <string name="logout">Log out</string>
+    <string name="user_profile">Profile</string>
+    <string name="activity_image_trans">user_image_trans</string>
 
 </resources>

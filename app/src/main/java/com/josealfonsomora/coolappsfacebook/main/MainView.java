@@ -14,4 +14,8 @@ public interface MainView extends MvpView {
     void showErrorToast(String message);
 
     void moveToLogin();
+
+    void openUserProfile();
+
+    void closeNavDrawer();
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import com.josealfonsomora.coolappsfacebook.facebookAPI.FacebookClient;
 import com.josealfonsomora.coolappsfacebook.login.LoginPresenter;
 import com.josealfonsomora.coolappsfacebook.main.MainPresenter;
+import com.josealfonsomora.coolappsfacebook.profile.ProfilePresenter;
 
 import javax.inject.Singleton;
 
@@ -34,6 +35,11 @@ public class AppModule {
     @Provides
     public MainPresenter provideMainPresenter(FacebookClient facebookClient, UserSession userSession) {
         return new MainPresenter(facebookClient, userSession);
+    }
+
+    @Provides
+    public ProfilePresenter provideProfilePresenter(FacebookClient facebookClient, UserSession userSession) {
+        return new ProfilePresenter(userSession,facebookClient);
     }
 
 }

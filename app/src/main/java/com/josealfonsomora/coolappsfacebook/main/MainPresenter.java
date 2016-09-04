@@ -35,8 +35,8 @@ public class MainPresenter extends BasePresenter<MainView> {
                             if (isViewAttached()) {
                                 if (response != null) {
                                     if (response.getData() != null) {
+                                        userSession.setPictureUrl(response.getData().getUrl());
                                         getView().setUserPicture(response.getData().getUrl());
-
                                     }
                                 }
                             }
@@ -58,12 +58,15 @@ public class MainPresenter extends BasePresenter<MainView> {
                             if (isViewAttached()) {
                                 if (response != null) {
                                     if (!TextUtils.isEmpty(response.getName())) {
+                                        userSession.setUserName(response.getName());
                                         getView().setUserName(response.getName());
                                     }
                                     if (!TextUtils.isEmpty(response.getGender())) {
+                                        userSession.setGender(response.getGender());
                                         getView().setUserGender(response.getGender());
                                     }
                                     if (!TextUtils.isEmpty(response.getLink())) {
+                                        userSession.setLink(response.getLink());
                                         getView().setUserLink(response.getLink());
                                     }
 
@@ -81,8 +84,18 @@ public class MainPresenter extends BasePresenter<MainView> {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+
+        if(id != R.id.nav_user_profile){
+            if(isViewAttached()){
+                getView().closeNavDrawer();
+            }
+        }
+
+        if (id == R.id.nav_user_profile) {
             // Handle the camera action
+            if(isViewAttached()){
+                getView().openUserProfile();
+            }
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
