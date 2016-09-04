@@ -1,5 +1,6 @@
 package com.josealfonsomora.coolappsfacebook.main;
 
+import com.josealfonsomora.coolappsfacebook.facebookAPI.FacebooFilmProfile;
 import com.josealfonsomora.coolappsfacebook.mvp.MvpView;
 
 public interface MainView extends MvpView {
@@ -18,4 +19,6 @@ public interface MainView extends MvpView {
     void openUserProfile();
 
     void closeNavDrawer();
+
+    void addNewFilm(FacebooFilmProfile dataResponse);
 }

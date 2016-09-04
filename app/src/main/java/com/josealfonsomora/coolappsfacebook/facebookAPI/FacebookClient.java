@@ -11,6 +11,16 @@ public interface FacebookClient {
             @Path("user-id") String user,
             @Query("access_token") String accessToken);
 
+    @GET("{user-id}/movies")
+    Observable<FacebookUserFilms> getUserFilms(
+            @Path("user-id") String user,
+            @Query("access_token") String accessToken);
+
+    @GET("{film-id}?fields=awards,genre,name,fan_count,directed_by,plot_outline,produced_by,release_date,screenplay_by,starring,studio,cover")
+    Observable<FacebooFilmProfile> getFilmProfile(
+                    @Path("film-id") String filmID,
+                    @Query("access_token") String accessToken);
+
     @GET("{user-id}/picture?redirect=0")
     Observable<FacebookPicture> getUserPictureProfile(
             @Path("user-id") String user,

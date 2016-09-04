@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.josealfonsomora.coolappsfacebook.App;
 import com.josealfonsomora.coolappsfacebook.R;
 import com.josealfonsomora.coolappsfacebook.UserSession;
+import com.josealfonsomora.coolappsfacebook.facebookAPI.FacebooFilmProfile;
 import com.josealfonsomora.coolappsfacebook.login.LoginActivity;
 import com.josealfonsomora.coolappsfacebook.mvp.BaseActivity;
 import com.josealfonsomora.coolappsfacebook.profile.ProfileActivity;
@@ -60,6 +61,9 @@ public class MainActivity extends BaseActivity implements MainView, NavigationVi
 
     @BindView(R.id.nav_view)
     NavigationView navigationView;
+
+    @BindView(R.id.films_text)
+    TextView textViewFilms;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -202,5 +206,10 @@ public class MainActivity extends BaseActivity implements MainView, NavigationVi
     public void closeNavDrawer() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+    }
+
+    @Override
+    public void addNewFilm(FacebooFilmProfile dataResponse) {
+        textViewFilms.setText(textViewFilms.getText() + "\n" + dataResponse.getName());
     }
 }
