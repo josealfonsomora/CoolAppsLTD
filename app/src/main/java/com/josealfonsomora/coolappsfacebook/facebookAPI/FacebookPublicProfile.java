@@ -8,7 +8,52 @@ public class FacebookPublicProfile {
     Range age_range;
     String link;
     String gender;
+    Cover cover;
+    String birthday;
+    String email;
+    HomeTown hometown;
+    String quotes;
     boolean verified;
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public HomeTown getHometown() {
+        return hometown;
+    }
+
+    public void setHometown(HomeTown hometown) {
+        this.hometown = hometown;
+    }
+
+    public String getQuotes() {
+        return quotes;
+    }
+
+    public void setQuotes(String quotes) {
+        this.quotes = quotes;
+    }
+
+    public Cover getCover() {
+        return cover;
+    }
+
+    public void setCover(Cover cover) {
+        this.cover = cover;
+    }
 
     public String getId() {
         return id;

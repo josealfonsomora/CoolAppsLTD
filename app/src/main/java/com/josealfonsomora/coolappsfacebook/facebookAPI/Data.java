@@ -7,6 +7,10 @@ public class Data {
 
     private String created_time;
 
+    private String story;
+
+    private String message;
+
     public String getId() {
         return id;
     }
@@ -29,5 +33,21 @@ public class Data {
 
     public void setCreated_time(String created_time) {
         this.created_time = created_time;
+    }
+
+    public String getStory() {
+        return story;
+    }
+
+    public void setStory(String story) {
+        this.story = story;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

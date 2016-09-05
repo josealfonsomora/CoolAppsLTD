@@ -6,7 +6,7 @@ import retrofit2.http.Query;
 import rx.Observable;
 
 public interface FacebookClient {
-    @GET("{user-id}?fields=id,name,first_name,last_name,age_range,link,gender,verified")
+    @GET("{user-id}?fields=name,first_name,last_name,age_range,link,gender,verified,cover,birthday,hometown,email,quotes")
     Observable<FacebookPublicProfile> getUserPublicProfile(
             @Path("user-id") String user,
             @Query("access_token") String accessToken);
@@ -14,6 +14,13 @@ public interface FacebookClient {
     @GET("{user-id}/movies")
     Observable<FacebookItemPage> getUserFilms(
             @Path("user-id") String user,
+            @Query("access_token") String accessToken);
+
+    @GET("{user-id}/feed")
+    Observable<FacebookItemPage> getUserTimeLine(
+            @Path("user-id") String user,
+            @Query("limit") int limit,
+            @Query("pagination") String pagination,
             @Query("access_token") String accessToken);
 
     @GET("{user-id}/books")

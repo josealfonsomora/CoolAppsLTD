@@ -1,18 +1,21 @@
 package com.josealfonsomora.coolappsfacebook.main;
 
+import android.net.Uri;
 import android.text.TextUtils;
 import android.view.MenuItem;
 
 import com.facebook.login.LoginManager;
 import com.github.mikephil.charting.data.PieEntry;
+import com.josealfonsomora.coolappsfacebook.App;
+import com.josealfonsomora.coolappsfacebook.AppSettings;
 import com.josealfonsomora.coolappsfacebook.R;
 import com.josealfonsomora.coolappsfacebook.UserSession;
 import com.josealfonsomora.coolappsfacebook.facebookAPI.Data;
 import com.josealfonsomora.coolappsfacebook.facebookAPI.FacebookBookProfile;
 import com.josealfonsomora.coolappsfacebook.facebookAPI.FacebookClient;
 import com.josealfonsomora.coolappsfacebook.facebookAPI.FacebookFilmProfile;
-import com.josealfonsomora.coolappsfacebook.facebookAPI.FacebookPictureType;
 import com.josealfonsomora.coolappsfacebook.facebookAPI.FacebookItemPage;
+import com.josealfonsomora.coolappsfacebook.facebookAPI.FacebookPictureType;
 import com.josealfonsomora.coolappsfacebook.mvp.BasePresenter;
 
 import java.util.ArrayList;
@@ -71,6 +74,7 @@ public class MainPresenter extends BasePresenter<MainView> {
                 .subscribe(response -> {
                             if (isViewAttached()) {
                                 if (response != null) {
+                                    userSession.setFacebookUserProfile(response);
                                     if (!TextUtils.isEmpty(response.getName())) {
                                         userSession.setUserName(response.getName());
                                         getView().setUserName(response.getName());
@@ -115,9 +119,14 @@ public class MainPresenter extends BasePresenter<MainView> {
 
         } else if (id == R.id.nav_books) {
             getBooks();
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_timeline) {
+            showTimeLine();
 
         } else if (id == R.id.nav_share) {
+            final String appPackageName = App.getApp().getPackageName(); // getPackageName() from Context or Activity object
+            if(isViewAttached()){
+                    getView().share(appPackageName);
+            }
 
         } else if (id == R.id.nav_logout) {
             if (isViewAttached()) {
@@ -126,6 +135,10 @@ public class MainPresenter extends BasePresenter<MainView> {
                 getView().moveToLogin();
             }
         }
+    }
+
+    private void showTimeLine() {
+        getUserTimeLine();
     }
 
     private void getFilms() {
@@ -308,6 +321,38 @@ public class MainPresenter extends BasePresenter<MainView> {
     public void init() {
         getUserPublicProfile();
         getUserPictureProfile();
+        getUserTimeLine();
+    }
+
+    private void getUserTimeLine() {
+        if(isViewAttached()){
+            getView().clearTimeLine();
+        }
+        facebookClient.getUserTimeLine(userSession.getFacebookUserId(), AppSettings.PAGINATION_LIMIT, null, userSession.getFacebookAccessToken())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(dataResponse -> {
+                            if (dataResponse != null) {
+                                if (!dataResponse.getData().isEmpty()) {
+                                    if (isViewAttached()) {
+                                        getView().showTimeline();
+                                        getView().addItemsToTimeline(dataResponse.getData());
+                                    }
+                                } else {
+                                    if (isViewAttached()) {
+                                        getView().hideTimeLine();
+                                        getView().showErrorNoTimeLineToast();
+                                    }
+                                }
+                            }
+                        }
+                        ,
+                        error -> {
+                            if (isViewAttached()) {
+                                getView().showErrorToast(error.getMessage());
+                            }
+                        });
     }
 
 }

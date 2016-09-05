@@ -30,22 +30,22 @@ public class AppSettings {
 
 
     );
-    public static String FACEBOOK_BASE_URL = "https://graph.facebook.com/v2.7/";
-
     public static final int[] PIECHART_COLORS = new int[]{
             rgb("#2ecc71"), rgb("#f1c40f"), rgb("#e74c3c"), rgb("#3498db")};
-
-    public static int rgb(String hex) {
-        int color = (int)Long.parseLong(hex.replace("#", ""), 16);
-        int r = color >> 16 & 255;
-        int g = color >> 8 & 255;
-        int b = color >> 0 & 255;
-        return Color.rgb(r, g, b);
-    }
+    public static String FACEBOOK_BASE_URL = "https://graph.facebook.com/v2.7/";
+    public static int PAGINATION_LIMIT = 50;
 
     // Do not instantiate this!
     private AppSettings() {
 
+    }
+
+    public static int rgb(String hex) {
+        int color = (int) Long.parseLong(hex.replace("#", ""), 16);
+        int r = color >> 16 & 255;
+        int g = color >> 8 & 255;
+        int b = color >> 0 & 255;
+        return Color.rgb(r, g, b);
     }
 
 

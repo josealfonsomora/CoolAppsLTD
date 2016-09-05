@@ -11,6 +11,8 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -30,7 +32,8 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.josealfonsomora.coolappsfacebook.App;
 import com.josealfonsomora.coolappsfacebook.R;
 import com.josealfonsomora.coolappsfacebook.UserSession;
-import com.josealfonsomora.coolappsfacebook.facebookAPI.FacebookFilmProfile;
+import com.josealfonsomora.coolappsfacebook.adapters.TimeLineAdapter;
+import com.josealfonsomora.coolappsfacebook.facebookAPI.Data;
 import com.josealfonsomora.coolappsfacebook.login.LoginActivity;
 import com.josealfonsomora.coolappsfacebook.mvp.BaseActivity;
 import com.josealfonsomora.coolappsfacebook.profile.ProfileActivity;
@@ -64,13 +67,20 @@ public class MainActivity extends BaseActivity implements MainView, NavigationVi
     @BindView(R.id.chart)
     PieChart mChart;
 
+    @BindView(R.id.timeline_recycler_view)
+    RecyclerView mTimeline;
+    private LinearLayoutManager mLayoutManager;
+    private TimeLineAdapter mAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         App.getApp().component().inject(this);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         }
+
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
@@ -83,6 +93,14 @@ public class MainActivity extends BaseActivity implements MainView, NavigationVi
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
+
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(this);
+        mTimeline.setLayoutManager(mLayoutManager);
+
+        // specify an adapter (see also next example)
+        mAdapter = new TimeLineAdapter();
+        mTimeline.setAdapter(mAdapter);
     }
 
     @Override
@@ -201,6 +219,7 @@ public class MainActivity extends BaseActivity implements MainView, NavigationVi
     @Override
     public void initChart() {
         mChart.setVisibility(View.GONE);
+        mTimeline.setVisibility(View.GONE);
         mChart.setUsePercentValues(true);
         mChart.setExtraOffsets(5, 10, 5, 5);
         mChart.setDescription("");
@@ -262,5 +281,40 @@ public class MainActivity extends BaseActivity implements MainView, NavigationVi
     @Override
     public void showNoDataFromFacebookErrorToast(String object) {
         Toast.makeText(MainActivity.this, getResources().getString(R.string.no_data_from_facebook,object), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showErrorNoTimeLineToast() {
+        Toast.makeText(MainActivity.this, getResources().getString(R.string.no_time_lime_error), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void addItemsToTimeline(List<Data> data) {
+        mAdapter.addItems(data);
+    }
+
+    @Override
+    public void showTimeline() {
+        mTimeline.setVisibility(View.VISIBLE);
+        mChart.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void hideTimeLine() {
+        mTimeline.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void clearTimeLine() {
+        mAdapter.clearData();
+    }
+
+    @Override
+    public void share(String packagename) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.share_text,packagename));
+        intent.setType("text/plain");
+        startActivity(intent);
     }
 }

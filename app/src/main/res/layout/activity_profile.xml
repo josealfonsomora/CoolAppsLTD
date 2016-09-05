@@ -2,45 +2,90 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/cover"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_alignParentTop="true"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside" />
 
     <RelativeLayout
         android:id="@+id/user_header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
         android:layout_alignParentTop="true"
-        android:background="@color/facebook_light_blue"
-        android:gravity="right"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="vertical">
+
 
         <ImageView
             android:id="@+id/smaller_image_view"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
             android:src="@drawable/com_facebook_profile_picture_blank_portrait"
             android:transitionName="profile" />
+
+        <TextView
+            android:id="@+id/profile_quote"
+            style="@style/Quote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            tools:text="some quote from the user" />
     </RelativeLayout>
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/user_header"
-        android:orientation="vertical">
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:orientation="vertical"
+
+        android:padding="16dp">
+
+
+
+        <TextView
+            android:id="@+id/name"
+            style="@style/TextStyleBig"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Name Surname"
+            android:textColor="@color/facebook_blue" />
 
         <TextView
             android:id="@+id/gender"
+            style="@style/TextStyleBig"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             tools:text="male" />
 
         <TextView
-            android:id="@+id/address"
+            android:id="@+id/email"
+            style="@style/TextStyleBig"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            tools:text="Address" />
+
+        <TextView
+            android:id="@+id/birthay"
+            style="@style/TextStyleBig"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             tools:text="Address" />
     </LinearLayout>
 </RelativeLayout>
