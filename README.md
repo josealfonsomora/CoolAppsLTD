@@ -32,4 +32,10 @@ A native **Android** app that allows a user to login with Facebook and show some
 * Styling user profile
 * Show more info about books and films
 * Translates
-* Look and fell
+* Look and feel
+* Fix broken unit tests because Facebook and Timeline
+* ***More Tests!***
+
+# Download it from Play Store
+
+https://play.google.com/store/apps/details?id=com.josealfonsomora.coolappsfacebook
