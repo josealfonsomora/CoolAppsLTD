@@ -10,4 +10,8 @@
 
     </style>
 
+    <style name="AppTheme.NoActionBar.Login">
+        <item name="android:background">@drawable/background_login</item>
+    </style>
+
 </resources>

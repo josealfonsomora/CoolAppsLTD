@@ -18,4 +18,5 @@
     <string name="time_line">Time line</string>
     <string name="no_time_lime_error">There is no timeline. Are you using your Facebook account? Get some friends!</string>
     <string name="share_text">Your Facebook profile with CoolApps: http://play.google.com/store/apps/details?id=%1$s</string>
+    <string name="login_with_facebook">Log In with Facebook</string>
 </resources>

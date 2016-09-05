@@ -90,4 +90,12 @@
         <item name="android:background">@drawable/background_login</item>
     </style>
 
+    <style name="facebook_button">
+        <item name="android:padding">16dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:background">@color/facebook_blue</item>
+        <item name="android:textColor">@color/facebook_white</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
 </resources>
