@@ -297,6 +297,7 @@ public class MainActivity extends BaseActivity implements MainView, NavigationVi
     public void showTimeline() {
         mTimeline.setVisibility(View.VISIBLE);
         mChart.setVisibility(View.GONE);
+        getSupportActionBar().setTitle(getResources().getString(R.string.time_line));
     }
 
     @Override
