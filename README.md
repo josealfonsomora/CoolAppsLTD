@@ -19,3 +19,17 @@ A native **Android** app that allows a user to login with Facebook and show some
 #### Mega bonus points:
 * Unit tests
 * A “professional” look and feel from the app.
+
+## Features
+* Timeline from user feed
+* Graphic that shows the percentage of written_by liked
+* Graphic that shows the percentage of genre films liked
+* Share option
+* User profile with more info
+
+## Todo
+* Handle device rotation and save state
+* Styling user profile
+* Show more info about books and films
+* Translates
+* Look and fell
