@@ -3,6 +3,10 @@ package com.josealfonsomora.coolappsfacebook;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
+
+import com.google.gson.Gson;
+import com.josealfonsomora.coolappsfacebook.facebookAPI.FacebookPublicProfile;
 
 @SuppressLint("CommitPrefEdits")
 public class UserSession {
@@ -18,6 +22,7 @@ public class UserSession {
     private final String FACEBOOK_GENDER = "FACEBOOK_GENDER";
     private final String FACEBOOK_LINK = "FACEBOOK_LINK";
     private final String FACEBOOK_PICTURE_URL = "FACEBOOK_PICTURE_URL";
+    private final String FACEBOOK_PUBLIC_PROFILE = "FACEBOOK_PUBLIC_PROFILE";
 
     public UserSession(Context context) {
         session = context.getSharedPreferences("user_session", Context.MODE_PRIVATE);
@@ -69,6 +74,24 @@ public class UserSession {
     }
     public String getPictureUrl() {
         return session.getString(FACEBOOK_PICTURE_URL, "");
+    }
+
+    public void setFacebookUserProfile(FacebookPublicProfile profile) {
+        Gson gson = new Gson();
+        String json = gson.toJson(profile);
+        editor.putString(FACEBOOK_PUBLIC_PROFILE, json).commit();
+    }
+
+    public FacebookPublicProfile getFacebookUserProfile(){
+        Gson gson = new Gson();
+        String json = session.getString(FACEBOOK_PUBLIC_PROFILE, "");
+        try {
+            FacebookPublicProfile obj = gson.fromJson(json, FacebookPublicProfile.class);
+            return obj;
+        }catch (Exception e){
+            Log.e("UserSession",e.toString());
+            return null;
+        }
     }
 }
 
