@@ -13,8 +13,81 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="Theme.AppCompat.Light.NoActionBar" parent="@style/Theme.AppCompat.Light">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="time_line_item">
+
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="time_line_item.left">
+        <item name="android:layout_gravity">left</item>
+    </style>
+
+    <style name="time_line_item.rigth">
+        <item name="android:layout_gravity">right</item>
+    </style>
+
+    <style name="time_line_item_text">
+        <item name="android:fontFamily">sans-serif-thin</item>
+        <item name="android:textColor">@color/facebook_blue</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="time_line_item_text.title">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="time_line_item_text.date">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+
+    <style name="TextStyleMedium">
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">sans-serif-thin</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextStyleBig">
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">sans-serif-thin</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextStyleMedium.White">
+        <item name="android:textColor">@color/facebook_white</item>
+    </style>
+
+    <style name="Quote" parent="TextStyleMedium.White">
+        <item name="android:background">@color/transparent_black</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.Login">
+        <item name="android:background">@drawable/background_login</item>
+    </style>
 
 </resources>
