@@ -54,6 +54,7 @@ dependencies {
     compile "io.reactivex:rxandroid:${appLibs.RxANDROID_VERSION}"
     compile "io.reactivex:rxjava:${appLibs.RxJAVA_VERSION}"
     compile "com.squareup.picasso:picasso:${appLibs.PICASSO_VERSION}"
+    compile "com.android.support:recyclerview-v7:${appLibs.ANDROID_SUPPORT_VERSION}"
 
     // Dependencies for local unit tests
     testCompile "junit:junit:${testLibs.JUNIT_VERSION}"
