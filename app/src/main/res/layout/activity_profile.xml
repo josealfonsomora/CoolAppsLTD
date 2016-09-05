@@ -36,6 +36,7 @@
         <TextView
             android:id="@+id/profile_quote"
             style="@style/Quote"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"

@@ -8,6 +8,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -120,6 +121,7 @@ public class ProfileActivity extends BaseActivity implements ProfileView, Naviga
 
     @Override
     public void updateQuote(String quotes) {
+        quoteTextView.setVisibility(View.VISIBLE);
         quoteTextView.setText(quotes);
     }
 
