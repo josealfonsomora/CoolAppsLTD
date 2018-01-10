@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -222,7 +223,7 @@ public class MainActivity extends BaseActivity implements MainView, NavigationVi
         mTimeline.setVisibility(View.GONE);
         mChart.setUsePercentValues(true);
         mChart.setExtraOffsets(5, 10, 5, 5);
-        mChart.setDescription("");
+        mChart.setDescription(new Description());
         mChart.setDragDecelerationFrictionCoef(0.95f);
 
         mChart.setDrawHoleEnabled(true);
