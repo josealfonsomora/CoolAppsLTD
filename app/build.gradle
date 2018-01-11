@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 def appLibs = rootProject.ext.appLibraries;
 def testLibs = rootProject.ext.testingLibraries;
@@ -60,6 +61,8 @@ dependencies {
     implementation "io.reactivex:rxjava:${appLibs.RxJAVA_VERSION}"
     implementation "com.squareup.picasso:picasso:${appLibs.PICASSO_VERSION}"
     implementation "com.android.support:recyclerview-v7:${appLibs.ANDROID_SUPPORT_VERSION}"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     annotationProcessor "com.jakewharton:butterknife-compiler:${appLibraries.BUTTERKNIFE_VERSION}"
     annotationProcessor "com.google.dagger:dagger-compiler:${appLibraries.DAGGER_VERSION}"
